@@ -1,75 +1,671 @@
-<style>
-  .stars {
-    overflow: hidden;
-    background:
-      radial-gradient(ellipse at 20% 30%,
-        rgba(100, 90, 180, .2), transparent 50%),
-      radial-gradient(ellipse at 80% 70%,
-        rgba(216, 189, 131, .12), transparent 45%);
-  }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="A little museum of us, made with love.">
+  <title>The Museum of Us</title>
 
+  <style>
+    :root {
+      --night: #0b1020;
+      --panel: #121a2d;
+      --gold: #d8bd83;
+      --ivory: #f3ecdd;
+      --muted: #b6b4bd;
+      --line: rgba(216, 189, 131, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 24px;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(
+        ellipse at top,
+        #202846 0%,
+        var(--night) 55%
+      );
+      background-color: var(--night);
+      color: var(--ivory);
+      font-family: Georgia, "Times New Roman", serif;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ✨ THE MUSEUM OF US — MAGICAL NIGHT SKY */
+.stars {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+  opacity: 0.9;
+  background-image:
+    radial-gradient(1px 1px at 8% 18%, #fff8df 99%, transparent),
+    radial-gradient(2px 2px at 22% 72%, #ffffff 99%, transparent),
+    radial-gradient(1px 1px at 41% 35%, #d8bd83 99%, transparent),
+    radial-gradient(2px 2px at 63% 12%, #fff8df 99%, transparent),
+    radial-gradient(1px 1px at 79% 58%, #ffffff 99%, transparent),
+    radial-gradient(1px 1px at 92% 83%, #d8bd83 99%, transparent),
+    radial-gradient(2px 2px at 5% 88%, #ffffff 99%, transparent),
+    radial-gradient(1px 1px at 54% 91%, #fff8df 99%, transparent);
+  background-size: 100% 100%;
+  animation: starTwinkle 4s ease-in-out infinite alternate;
+}
+
+/* Distant stars shimmer at a different speed */
+.stars::before {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  background-image:
+    radial-gradient(1px 1px at 15% 25%, #ffffff 99%, transparent),
+    radial-gradient(2px 2px at 42% 48%, #d8bd83 99%, transparent),
+    radial-gradient(1px 1px at 73% 21%, #ffffff 99%, transparent),
+    radial-gradient(1px 1px at 88% 75%, #fff8df 99%, transparent),
+    radial-gradient(1.5px 1.5px at 32% 86%, #ffffff 99%, transparent);
+  background-size: 260px 260px;
+  animation: distantStars 35s linear infinite,
+             starTwinkle 6s ease-in-out infinite alternate;
+}
+
+/* A shooting star glides diagonally across the sky */
+.stars::after {
+  content: "";
+  position: absolute;
+  top: 8%;
+  left: 75%;
+  width: 130px;
+  height: 2px;
+  opacity: 0;
+  border-radius: 50%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 248, 223, 0.2),
+    #fff8df
+  );
+  box-shadow: 0 0 8px rgba(216, 189, 131, 0.65);
+  transform: rotate(-35deg);
+  transform-origin: right center;
+  animation: shootingStar 12s ease-in-out infinite;
+}
+
+/* Gentle, natural twinkling */
+@keyframes starTwinkle {
+  0% {
+    opacity: 0.35;
+    filter: brightness(0.8);
+  }
+  50% {
+    opacity: 0.95;
+    filter: brightness(1.5);
+  }
+  100% {
+    opacity: 0.55;
+    filter: brightness(1.1);
+  }
+}
+
+/* Slow celestial movement */
+@keyframes distantStars {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-130px, 100px, 0);
+  }
+}
+
+/* Shooting stars appear briefly, then disappear */
+@keyframes shootingStar {
+  0%, 65%, 100% {
+    opacity: 0;
+    transform: translate(0, 0) rotate(-35deg);
+  }
+  68% {
+    opacity: 1;
+  }
+  74% {
+    opacity: 0;
+    transform: translate(-380px, 240px) rotate(-35deg);
+  }
+}
+
+/* Respect visitors who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .stars,
   .stars::before,
   .stars::after {
-    content: "";
-    position: absolute;
-    inset: -40%;
-    pointer-events: none;
+    animation: none;
   }
+}
 
-  .stars::before {
-    background:
-      radial-gradient(ellipse at 30% 40%,
-        rgba(80, 100, 200, .2), transparent 40%),
-      radial-gradient(ellipse at 70% 60%,
-        rgba(140, 80, 170, .16), transparent 40%);
-    filter: blur(35px);
-    animation: cosmicFlow 18s ease-in-out infinite alternate;
-  }
-
-  .stars::after {
-    inset: 0;
-    background-image:
-      radial-gradient(2px 2px at 15% 25%, white, transparent),
-      radial-gradient(2px 2px at 70% 40%, #d8bd83, transparent),
-      radial-gradient(1px 1px at 40% 80%, white, transparent),
-      radial-gradient(2px 2px at 90% 15%, white, transparent);
-    background-size: 240px 240px;
-    animation: starGlow 4s ease-in-out infinite alternate;
-  }
-
-  @keyframes cosmicFlow {
-    from { transform: translate(-3%, -2%) rotate(0deg); }
-    to { transform: translate(3%, 2%) rotate(12deg); }
-  }
-
-  @keyframes starGlow {
-    from { opacity: .3; }
-    to { opacity: 1; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .stars::before,
-    .stars::after {
-      animation: none;
+    /* Secret relationship clock */
+    .clock-wrap {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: center;
+      padding: 24px 12px 0;
     }
-  }
-</style>
 
-<script>
-  (() => {
-    const sky = document.querySelector(".stars");
-    if (!sky) return;
+    .secret-clock {
+      display: inline-block;
+      max-width: 100%;
+      padding: 9px 15px;
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-size: clamp(17px, 4.5vw, 25px);
+      letter-spacing: 2px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      text-align: center;
+      border: 1px solid rgba(216, 189, 131, 0.28);
+      background: rgba(12, 22, 43, 0.65);
+      transition: border-color 0.3s, text-shadow 0.3s;
+    }
 
-    let timer;
+    .secret-clock:hover,
+    .secret-clock:focus-visible {
+      border-color: var(--gold);
+      text-shadow: 0 0 12px rgba(216, 189, 131, 0.4);
+      outline: none;
+    }
 
-    addEventListener("pointermove", event => {
-      sky.style.backgroundPosition =
-        `${event.clientX / 30}px ${event.clientY / 30}px`;
+    /* Header */
+    header {
+      padding: 22px 6%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--line);
+      letter-spacing: 2px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+    }
 
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        sky.style.backgroundPosition = "center";
-      }, 1500);
-    }, { passive: true });
-  })();
-</script>
+    .brand {
+      color: var(--gold);
+    }
+
+    .header-note {
+      color: var(--muted);
+      text-align: right;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 78vh;
+      padding: 75px 22px 90px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font-size: 0.76rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(3rem, 10vw, 6.5rem);
+      line-height: 1.05;
+      font-weight: normal;
+      margin: 22px 0;
+      letter-spacing: -2px;
+    }
+
+    h1 span {
+      color: var(--gold);
+      font-style: italic;
+    }
+
+    .subtitle {
+      max-width: 500px;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .dates {
+      margin-top: 35px;
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+    }
+
+    .enter {
+      display: inline-block;
+      margin-top: 42px;
+      padding: 12px 25px;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      transition: background 0.25s, color 0.25s;
+    }
+
+    .enter:hover,
+    .enter:focus-visible {
+      background: var(--gold);
+      color: var(--night);
+    }
+
+    .divider {
+      width: 70px;
+      height: 1px;
+      background: var(--gold);
+      margin: 0 auto 22px;
+    }
+
+    /* Exhibitions */
+    section {
+      padding: 75px 7%;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    h2 {
+      font-weight: normal;
+      font-size: clamp(2rem, 6vw, 3.3rem);
+      line-height: 1.2;
+      margin: 0;
+    }
+
+    .section-heading p {
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .exhibit {
+      display: block;
+      background: rgba(18, 26, 45, 0.82);
+      border: 1px solid var(--line);
+      padding: 28px 24px;
+      min-height: 210px;
+      transition: transform 0.25s, border-color 0.25s,
+        background 0.25s;
+    }
+
+    .exhibit:hover,
+    .exhibit:focus-visible {
+      transform: translateY(-4px);
+      border-color: var(--gold);
+      background: rgba(28, 38, 61, 0.95);
+    }
+
+    .number {
+      color: var(--gold);
+      font-size: 0.76rem;
+      letter-spacing: 3px;
+    }
+
+    .exhibit h3 {
+      font-size: 1.5rem;
+      line-height: 1.3;
+      font-weight: normal;
+      margin: 15px 0 8px;
+    }
+
+    .exhibit p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+
+    /* Quotes */
+    .quote {
+      max-width: 750px;
+      margin: 30px auto;
+      text-align: center;
+      font-size: clamp(1.4rem, 4vw, 2.1rem);
+      font-style: italic;      
+      line-height: 1.5;
+      color: var(--ivory);
+    }
+
+    .quote span {
+      color: var(--gold);
+    }
+
+    .placeholder {
+      max-width: 650px;
+      margin: 0 auto;
+      text-align: center;
+      color: var(--muted);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--line);
+      text-align: center;
+      padding: 35px 20px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    footer span {
+      color: var(--gold);
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      header {
+        padding: 18px 5%;
+        font-size: 0.65rem;
+      }
+
+      .header-note {
+        max-width: 120px;
+      }
+
+      .hero {
+        min-height: 75vh;
+        padding: 55px 20px 65px;
+      }
+
+      .eyebrow {
+        font-size: 0.68rem;
+        letter-spacing: 3px;
+      }
+
+      .dates {
+        font-size: 0.72rem;
+        letter-spacing: 1px;
+      }
+
+      .gallery {
+        grid-template-columns: 1fr;
+      }
+
+      .exhibit {
+        min-height: auto;
+        padding: 24px;
+      }
+
+      section {
+        padding: 55px 6%;
+      }
+
+      .secret-clock {
+        letter-spacing: 1px;
+        padding: 9px 10px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="stars" aria-hidden="true"></div>
+
+  <!-- The number is intentionally unexplained -->
+  <div class="clock-wrap">
+    <a class="secret-clock"
+       id="secretClock"
+       href="timeline.html"
+       aria-label="Open the timeline">
+      <span id="clockDays">000</span> :
+      <span id="clockHours">00</span> :
+      <span id="clockMinutes">00</span> :
+      <span id="clockSeconds">00</span>
+    </a>
+  </div>
+
+  <header>
+    <div class="brand">The Museum of Us</div>
+    <div class="header-note">An archive of two hearts</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">A collection of little eternities</div>
+
+      <h1>The Museum<br>of <span>Us.</span></h1>
+
+      <p class="subtitle">
+        Some things are too precious to leave only to memory.
+        So I made a little place for ours.
+      </p>
+
+      <div class="dates">
+        FEBRUARY 07, 2026 · FEBRUARY 14, 2026
+      </div>
+
+      <a class="enter" href="#exhibitions">Enter the museum ↓</a>
+    </section>
+
+    <section id="exhibitions">
+      <div class="section-heading">
+        <div class="divider"></div>
+        <h2>The Exhibitions</h2>
+        <p>Six rooms. Countless little things. One story.</p>
+      </div>
+
+      <div class="gallery">
+        <a class="exhibit" href="#beginning">
+          <div class="number">EXHIBIT I</div>
+          <h3>The Beginning</h3>
+          <p>Where a conversation became something more.</p>
+        </a>
+
+        <a class="exhibit" href="#little-things">
+          <div class="number">EXHIBIT II</div>
+          <h3>The Little Things</h3>
+          <p>All the details that make you, you.</p>
+        </a>
+
+        <a class="exhibit" href="#poetry">
+          <div class="number">EXHIBIT III</div>
+          <h3>The Poetry Archive</h3>
+          <p>Words written because ordinary words weren't enough.</p>
+        </a>
+
+        <a class="exhibit" href="#distance">
+          <div class="number">EXHIBIT IV</div>
+          <h3>Six Thousand Kilometres</h3>
+          <p>A little proof that distance isn't the whole story.</p>
+        </a>
+
+        <a class="exhibit" href="#letters">
+          <div class="number">EXHIBIT V</div>
+          <h3>The Letters Room</h3>
+          <p>Words for the days when you need them most.</p>
+        </a>
+
+        <a class="exhibit" href="#unwritten">
+          <div class="number">EXHIBIT VI</div>
+          <h3>The Unwritten Pages</h3>
+          <p>For everything we haven't experienced yet.</p>
+        </a>
+      </div>
+    </section>
+
+    <section id="beginning">
+      <div class="section-heading">
+        <div class="divider"></div>
+        <h2>I. The Beginning</h2>
+      </div>
+
+      <p class="quote">
+        It started with a conversation.<br>
+        <span>It didn't stay just a conversation.</span>
+      </p>
+
+      <p class="placeholder">
+        February 7, 2026 — the day our story began.
+        February 14, 2026, at 8:24 PM IST — the moment we became official.
+        The story behind those dates belongs here.
+      </p>
+    </section>
+
+    <section id="little-things">
+      <div class="section-heading">
+        <div class="divider"></div>
+        <h2>II. The Little Things</h2>
+        <p>A room for the details I never want to overlook.</p>
+      </div>
+
+      <p class="quote">
+        The smallest things about you<br>
+        are sometimes the <span>biggest things to me.</span>
+      </p>
+
+      <p class="placeholder">
+        A collection of the little things I notice, appreciate,
+        and never want you to think go unnoticed.
+      </p>
+    </section>
+
+    <section id="poetry">
+      <div class="section-heading">
+        <div class="divider"></div>
+        <h2>III. The Poetry Archive</h2>
+        <p>Every poem is a little piece of the time we shared.</p>
+      </div>
+
+      <p class="quote">
+        Some feelings become memories.<br>
+        Some memories become <span>poems.</span>
+      </p>
+
+      <p class="placeholder">
+        Our poems, arranged in chronological order,
+        with each original preserved just as it was written.
+      </p>
+    </section>
+
+    <section id="distance">
+      <div class="section-heading">
+        <div class="divider"></div>
+        <h2>IV. Six Thousand Kilometres</h2>
+        <p>Two places, separate skies, a shared story.</p>
+      </div>
+
+      <p class="quote">
+        The map measures the distance between us.<br>
+        It cannot measure <span>what we mean to each other.</span>
+      </p>
+
+      <p class="placeholder">
+        A place for our favourite memories, little traditions,
+        screenshots, and moments that made the distance feel smaller.
+      </p>
+    </section>
+
+    <section id="letters">
+      <div class="section-heading">
+        <div class="divider"></div>
+        <h2>V. The Letters Room</h2>
+        <p>For the days that need a few extra words.</p>
+      </div>
+
+      <p class="quote">
+        A letter is a little piece of someone<br>
+        you can <span>keep close.</span>
+      </p>
+
+      <p class="placeholder">
+        Private letters will be linked here once their access is configured.
+        The letters themselves will remain in restricted documents,
+        not in this public website.
+      </p>
+    </section>
+
+    <section id="unwritten">
+      <div class="section-heading">
+        <div class="divider"></div>
+        <h2>VI. The Unwritten Pages</h2>
+        <p>The future hasn't been written yet.</p>
+      </div>
+
+      <p class="quote">
+        There are still so many firsts ahead of us.<br>
+        <span>I'm glad our story is still being written.</span>
+      </p>
+
+      <p class="placeholder">
+        The final room will hold your birthday letter
+        and the things you hope to experience together.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    Made with care, for one very special person.<br>
+    <span>The Museum of Us · 2026</span>
+  </footer>
+
+  <script>
+    (function () {
+      // 14 February 2026, 8:24 PM Indian Standard Time
+      const start = new Date("2026-02-14T20:24:00+05:30").getTime();
+
+      const daysEl = document.getElementById("clockDays");
+      const hoursEl = document.getElementById("clockHours");
+      const minutesEl = document.getElementById("clockMinutes");
+      const secondsEl = document.getElementById("clockSeconds");
+
+      function updateClock() {
+        const total = Math.max(
+          0,
+          Math.floor((Date.now() - start) / 1000)
+        );
+
+        const days = Math.floor(total / 86400);
+        const hours = Math.floor((total % 86400) / 3600);
+        const minutes = Math.floor((total % 3600) / 60);
+        const seconds = total % 60;
+
+        daysEl.textContent = String(days).padStart(3, "0");
+        hoursEl.textContent = String(hours).padStart(2, "0");
+        minutesEl.textContent = String(minutes).padStart(2, "0");
+        secondsEl.textContent = String(seconds).padStart(2, "0");
+      }
+
+      updateClock();
+      setInterval(updateClock, 1000);
+    })();
+  </script>
+</body>
+</html>
