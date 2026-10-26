@@ -668,4 +668,79 @@
     })();
   </script>
 </body>
+  <style>
+  .stars {
+    overflow: hidden;
+    background:
+      radial-gradient(ellipse at 20% 30%,
+        rgba(100, 90, 180, .2), transparent 50%),
+      radial-gradient(ellipse at 80% 70%,
+        rgba(216, 189, 131, .12), transparent 45%);
+  }
+
+  .stars::before,
+  .stars::after {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    pointer-events: none;
+  }
+
+  .stars::before {
+    background:
+      radial-gradient(ellipse at 30% 40%,
+        rgba(80, 100, 200, .2), transparent 40%),
+      radial-gradient(ellipse at 70% 60%,
+        rgba(140, 80, 170, .16), transparent 40%);
+    filter: blur(35px);
+    animation: cosmicFlow 18s ease-in-out infinite alternate;
+  }
+
+  .stars::after {
+    inset: 0;
+    background-image:
+      radial-gradient(2px 2px at 15% 25%, white, transparent),
+      radial-gradient(2px 2px at 70% 40%, #d8bd83, transparent),
+      radial-gradient(1px 1px at 40% 80%, white, transparent),
+      radial-gradient(2px 2px at 90% 15%, white, transparent);
+    background-size: 240px 240px;
+    animation: starGlow 4s ease-in-out infinite alternate;
+  }
+
+  @keyframes cosmicFlow {
+    from { transform: translate(-3%, -2%) rotate(0deg); }
+    to { transform: translate(3%, 2%) rotate(12deg); }
+  }
+
+  @keyframes starGlow {
+    from { opacity: .3; }
+    to { opacity: 1; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stars::before,
+    .stars::after {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  (() => {
+    const sky = document.querySelector(".stars");
+    if (!sky) return;
+
+    let timer;
+
+    addEventListener("pointermove", event => {
+      sky.style.backgroundPosition =
+        `${event.clientX / 30}px ${event.clientY / 30}px`;
+
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        sky.style.backgroundPosition = "center";
+      }, 1500);
+    }, { passive: true });
+  })();
+</script>
 </html>
