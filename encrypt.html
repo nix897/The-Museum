@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Museum — Room Encryptor</title>
+</head>
+<body>
+<h2>Museum Room Encryptor</h2>
+<p>Use a strong, unique passphrase. Never put it in your website source.</p>
+
+<label for="password">Shared passphrase</label><br>
+<input id="password" type="password" autocomplete="off" minlength="12">
+<br><br>
+
+<label for="roomText">Room text</label><br>
+<textarea id="roomText" rows="8" style="width:95%" placeholder="Enter the text for one room"></textarea>
+<br><br>
+
+<button id="encrypt">Encrypt room text</button>
+<p id="status" role="status"></p>
+<label for="output">Encrypted output</label><br>
+<textarea id="output" rows="8" style="width:95%" readonly></textarea>
+<br>
+<button id="copy">Copy encrypted output</button>
+
+<script>
+const enc = new TextEncoder();
+
+function toBase64(bytes) {
+  let binary = "";
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary);
+}
+
+document.getElementById("encrypt").addEventListener("click", async () => {
+  const password = document.getElementById("password").value;
+  const text = document.getElementById("roomText").value;
+  const status = document.getElementById("status");
+  const output = document.getElementById("output");
+
+  output.value = "";
+
+  if (password.length < 12) {
+    status.textContent = "Use a passphrase of at least 12 characters.";
+    return;
+  }
+  if (!text.trim()) {
+    status.textContent = "Enter room text first.";
+    return;
+  }
+  if (!crypto.subtle) {
+    status.textContent = "Secure cryptography isn't available here. Open this page on your site's HTTPS address.";
+    return;
+  }
+
+  try {
+    status.textContent = "Encrypting…";
+
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+
+    const material = await crypto.subtle.importKey(
+      "raw", enc.encode(password), "PBKDF2", false, ["deriveKey"]
+    );
+
+    const key = await crypto.subtle.deriveKey(
+      { name: "PBKDF2", salt, iterations: 600000, hash: "SHA-256" },
+      material,
+      { name: "AES-GCM", length: 256 },
+      false,
+      ["encrypt"]
+    );
+
+    const ciphertext = await crypto.subtle.encrypt(
+      { name: "AES-GCM", iv },
+      key,
+      enc.encode(text)
+    );
+
+    output.value = JSON.stringify({
+      version: 1,
+      kdf: "PBKDF2-SHA-256",
+      iterations: 600000,
+      salt: toBase64(salt),
+      iv: toBase64(iv),
+      ciphertext: toBase64(new Uint8Array(ciphertext))
+    }, null, 2);
+
+    status.textContent = "Encrypted. Save the output; it does not contain your passphrase.";
+  } catch (error) {
+    status.textContent = "Encryption failed. Try again in a modern browser.";
+  }
+});
+
+document.getElementById("copy").addEventListener("click", async () => {
+  const output = document.getElementById("output");
+  if (!output.value) {
+    document.getElementById("status").textContent = "Encrypt some text first.";
+    return;
+  }
+  output.select();
+  try {
+    await navigator.clipboard.writeText(output.value);
+    document.getElementById("status").textContent = "Encrypted output copied.";
+  } catch {
+    document.getElementById("status").textContent =
+      "Output selected. Long-press it and choose Copy.";
+  }
+});
+</script>
+</body>
+</html>
