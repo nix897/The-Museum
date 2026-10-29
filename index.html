@@ -681,22 +681,31 @@
       </div>
     </section>
 
-    <section id="beginning">
-      <div class="section-heading">
-        <div class="divider"></div>
-        <h2>I. The Beginning</h2>
-      </div>
+   <!-- THE LOCKED ROOM -->
+<div class="locked-room" id="locked-room">
+  <button class="locked-door" id="locked-door"
+          onclick="openLockedRoom()"
+          aria-expanded="false"
+          aria-controls="hidden-room">
+    <span class="door-symbol">✧</span>
+    <span class="door-title">The Locked Room</span>
+    <span class="door-subtitle">Some things are kept beyond the story.</span>
+    <span class="door-lock">♙ &nbsp; TAP TO UNLOCK</span>
+  </button>
 
-      <p class="quote">
-        It started with a conversation.<br>
-        <span>It didn't stay just a conversation.</span>
+  <div class="hidden-room" id="hidden-room" hidden>
+    <div class="room-content">
+      <span class="room-star">✦</span>
+      <h3>A Room of Our Own</h3>
+      <p class="room-whisper">
+        Not every part of our story belongs in the gallery.
+        Some things are meant to be found, not displayed.
       </p>
-
-      <p class="placeholder">
-        February 7, 2026 — the day our story began.
-        February 14, 2026, at 8:24 PM IST — the moment we became official.
-        The story behind those dates belongs here.
-      </p>
+      <div class="room-divider">✧ ─── ✧</div>
+      <p class="room-note">A little place, just for us.</p>
+    </div>
+  </div>
+</div>
     </section>
 
     <section id="little-things">
