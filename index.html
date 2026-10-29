@@ -42,7 +42,8 @@
       text-decoration: none;
     }
 
-    /* DREAMLIKE COSMIC BACKGROUND */
+    /* COSMIC BACKGROUND */
+
     .cosmic-mist {
       position: fixed;
       inset: 0;
@@ -107,7 +108,8 @@
       to { transform: translate3d(-15vw, -8vh, 0) rotate(-12deg); }
     }
 
-    /* SUN AND MOON: SLOW, QUIET CELESTIAL MOTION */
+    /* SUN AND MOON */
+
     .celestial-orbit {
       position: absolute;
       width: min(82vw, 900px);
@@ -139,47 +141,48 @@
         0 0 42px rgba(216, 189, 131, 0.18);
     }
 
-   .orbiting-moon {
-  position: absolute;
-  bottom: 7%;
-  right: 12%;
-  width: 25px;
-  height: 25px;
-  border-radius: 50%;
-  overflow: hidden;
-  background: #e7e4d9;
-  box-shadow:
-    0 0 12px rgba(243, 236, 221, 0.22),
-    0 0 32px rgba(243, 236, 221, 0.1);
-}
+    .orbiting-moon {
+      position: absolute;
+      bottom: 7%;
+      right: 12%;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #e7e4d9;
+      box-shadow:
+        0 0 12px rgba(243, 236, 221, 0.22),
+        0 0 32px rgba(243, 236, 221, 0.1);
+    }
 
-/* The shadow moves across the moon to create changing phases */
-.orbiting-moon::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: #11172a;
-  transform: translateX(-100%);
-  animation: moonPhases 300s steps(1, end) infinite;
-}
+    .orbiting-moon::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: #11172a;
+      transform: translateX(-100%);
+      animation: moonPhases 300s steps(1, end) infinite;
+    }
 
-@keyframes moonPhases {
-  0%, 100% { transform: translateX(-100%); }
-  12.5% { transform: translateX(-75%); }
-  25% { transform: translateX(0%); }
-  37.5% { transform: translateX(75%); }
-  50% { transform: translateX(100%); }
-  62.5% { transform: translateX(75%); }
-  75% { transform: translateX(0%); }
-  87.5% { transform: translateX(-75%); }
-}
+    @keyframes moonPhases {
+      0%, 100% { transform: translateX(-100%); }
+      12.5% { transform: translateX(-75%); }
+      25% { transform: translateX(0%); }
+      37.5% { transform: translateX(75%); }
+      50% { transform: translateX(100%); }
+      62.5% { transform: translateX(75%); }
+      75% { transform: translateX(0%); }
+      87.5% { transform: translateX(-75%); }
+    }
 
-@keyframes celestialTurn {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-    /* ORIGINAL TWINKLING STAR FIELD */
+    @keyframes celestialTurn {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    /* STAR FIELD */
+
     .stars {
       position: fixed;
       inset: 0;
@@ -216,6 +219,7 @@
     }
 
     /* SHOOTING STARS */
+
     .shooting-stars {
       position: absolute;
       inset: 0;
@@ -289,7 +293,8 @@
       }
     }
 
-    /* Keep the original site above all background effects */
+    /* KEEP CONTENT ABOVE BACKGROUND */
+
     .clock-wrap,
     header,
     main,
@@ -298,7 +303,8 @@
       z-index: 2;
     }
 
-    /* SECRET RELATIONSHIP CLOCK */
+    /* SECRET CLOCK */
+
     .clock-wrap {
       display: flex;
       justify-content: center;
@@ -329,6 +335,7 @@
     }
 
     /* HEADER */
+
     header {
       padding: 22px 6%;
       display: flex;
@@ -349,6 +356,7 @@
     }
 
     /* HERO */
+
     .hero {
       min-height: 78vh;
       padding: 75px 22px 90px;
@@ -418,6 +426,7 @@
     }
 
     /* EXHIBITIONS */
+
     section {
       padding: 75px 7%;
       max-width: 1100px;
@@ -484,6 +493,7 @@
     }
 
     /* QUOTES */
+
     .quote {
       max-width: 750px;
       margin: 30px auto;
@@ -503,7 +513,125 @@
       color: var(--muted);
     }
 
+    /* THE LOCKED ROOM */
+
+    .locked-room {
+      max-width: 520px;
+      margin: 55px auto 30px;
+      text-align: center;
+      scroll-margin-top: 20px;
+    }
+
+    .locked-door {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 13px;
+      width: 100%;
+      padding: 36px 24px;
+      color: var(--gold);
+      background:
+        radial-gradient(ellipse at center,
+          rgba(216,189,131,.09), transparent 72%),
+        rgba(8,13,29,.88);
+      border: 1px solid rgba(216,189,131,.42);
+      outline: 1px solid rgba(216,189,131,.12);
+      outline-offset: 5px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .4s, border-color .4s;
+    }
+
+    .locked-door:hover,
+    .locked-door:focus-visible {
+      border-color: var(--gold);
+      background-color: rgba(216,189,131,.08);
+    }
+
+    .door-symbol {
+      font-size: 2rem;
+      text-shadow: 0 0 18px rgba(216,189,131,.5);
+    }
+
+    .door-title {
+      font-family: Georgia, serif;
+      font-size: 1.3rem;
+      letter-spacing: 2px;
+    }
+
+    .door-subtitle {
+      color: rgba(235,226,207,.7);
+      font-size: .85rem;
+      line-height: 1.7;
+    }
+
+    .door-lock {
+      margin-top: 8px;
+      font-size: .7rem;
+      letter-spacing: 2px;
+    }
+
+    .hidden-room {
+      margin-top: 28px;
+      padding: 40px 24px;
+      border: 1px solid rgba(216,189,131,.3);
+      background:
+        radial-gradient(ellipse at top,
+          rgba(65,78,125,.18), transparent 75%),
+        rgba(5,9,22,.75);
+      animation: roomReveal .8s ease both;
+    }
+
+    .hidden-room[hidden] {
+      display: none;
+    }
+
+    .room-star {
+      color: var(--gold);
+      font-size: 1.8rem;
+    }
+
+    .room-content h3 {
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-weight: normal;
+      letter-spacing: 1px;
+      margin: 18px 0;
+    }
+
+    .room-whisper {
+      max-width: 360px;
+      margin: 0 auto;
+      color: rgba(235,226,207,.82);
+      font-size: .95rem;
+      line-height: 1.9;
+    }
+
+    .room-divider {
+      margin: 25px 0;
+      color: var(--gold);
+      letter-spacing: 5px;
+    }
+
+    .room-note {
+      color: rgba(216,189,131,.7);
+      font-family: Georgia, serif;
+      font-style: italic;
+    }
+
+    @keyframes roomReveal {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
     /* FOOTER */
+
     footer {
       border-top: 1px solid var(--line);
       text-align: center;
@@ -515,6 +643,7 @@
     footer span { color: var(--gold); }
 
     /* MOBILE */
+
     @media (max-width: 600px) {
       header {
         padding: 18px 5%;
@@ -538,7 +667,9 @@
         letter-spacing: 1px;
       }
 
-      .gallery { grid-template-columns: 1fr; }
+      .gallery {
+        grid-template-columns: 1fr;
+      }
 
       .exhibit {
         min-height: auto;
@@ -563,7 +694,8 @@
       }
     }
 
-    /* ACCESSIBILITY: REDUCE MOTION WHEN REQUESTED */
+    /* ACCESSIBILITY */
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
 
@@ -574,125 +706,11 @@
         transition-duration: 0.01ms !important;
       }
     }
-    /* THE LOCKED ROOM */
-.locked-room {
-  max-width: 520px;
-  margin: 55px auto 30px;
-  text-align: center;
-}
-
-.locked-door {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 13px;
-  width: 100%;
-  padding: 36px 24px;
-  color: #d8bd83;
-  background:
-    radial-gradient(ellipse at center,
-      rgba(216,189,131,.09), transparent 72%),
-    rgba(8,13,29,.88);
-  border: 1px solid rgba(216,189,131,.42);
-  outline: 1px solid rgba(216,189,131,.12);
-  outline-offset: 5px;
-  cursor: pointer;
-  font-family: inherit;
-  transition: background .4s, border-color .4s;
-}
-
-.locked-door:hover,
-.locked-door:focus-visible {
-  border-color: #d8bd83;
-  background-color: rgba(216,189,131,.08);
-}
-
-.door-symbol {
-  font-size: 2rem;
-  text-shadow: 0 0 18px rgba(216,189,131,.5);
-}
-
-.door-title {
-  font-family: Georgia, serif;
-  font-size: 1.3rem;
-  letter-spacing: 2px;
-}
-
-.door-subtitle {
-  color: rgba(235,226,207,.7);
-  font-size: .85rem;
-  line-height: 1.7;
-}
-
-.door-lock {
-  margin-top: 8px;
-  font-size: .7rem;
-  letter-spacing: 2px;
-}
-
-.hidden-room {
-  margin-top: 28px;
-  padding: 40px 24px;
-  border: 1px solid rgba(216,189,131,.3);
-  background:
-    radial-gradient(ellipse at top,
-      rgba(65,78,125,.18), transparent 75%),
-    rgba(5,9,22,.75);
-  animation: roomReveal .8s ease both;
-}
-
-.hidden-room[hidden] {
-  display: none;
-}
-
-.room-star {
-  color: #d8bd83;
-  font-size: 1.8rem;
-}
-
-.room-content h3 {
-  color: #d8bd83;
-  font-family: Georgia, serif;
-  font-weight: normal;
-  letter-spacing: 1px;
-  margin: 18px 0;
-}
-
-.room-whisper {
-  max-width: 360px;
-  margin: 0 auto;
-  color: rgba(235,226,207,.82);
-  font-size: .95rem;
-  line-height: 1.9;
-}
-
-.room-divider {
-  margin: 25px 0;
-  color: #d8bd83;
-  letter-spacing: 5px;
-}
-
-.room-note {
-  color: rgba(216,189,131,.7);
-  font-family: Georgia, serif;
-  font-style: italic;
-}
-
-@keyframes roomReveal {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
   </style>
 </head>
 
 <body>
-  <!-- New background effects; the original stars remain separate -->
+  <!-- COSMIC BACKGROUND -->
   <div class="cosmic-mist" aria-hidden="true">
     <div class="nebula nebula-one"></div>
     <div class="nebula nebula-two"></div>
@@ -713,7 +731,7 @@
 
   <div class="stars" aria-hidden="true"></div>
 
-  <!-- The number is intentionally unexplained -->
+  <!-- SECRET RELATIONSHIP CLOCK -->
   <div class="clock-wrap">
     <a class="secret-clock"
        id="secretClock"
@@ -732,6 +750,7 @@
   </header>
 
   <main>
+    <!-- HERO -->
     <section class="hero">
       <div class="eyebrow">A collection of little eternities</div>
 
@@ -749,6 +768,7 @@
       <a class="enter" href="#exhibitions">Enter the museum ↓</a>
     </section>
 
+    <!-- EXHIBITION TILES -->
     <section id="exhibitions">
       <div class="section-heading">
         <div class="divider"></div>
@@ -757,7 +777,8 @@
       </div>
 
       <div class="gallery">
-        <a class="exhibit" href="#beginning">
+        <a class="exhibit" href="#locked-room"
+           onclick="event.preventDefault(); document.getElementById('locked-room').scrollIntoView({behavior:'smooth', block:'center'});">
           <div class="number">EXHIBIT I</div>
           <h3>The Beginning</h3>
           <p>Where a conversation became something more.</p>
@@ -795,33 +816,47 @@
       </div>
     </section>
 
-   <!-- THE LOCKED ROOM -->
-<div class="locked-room" id="locked-room">
-  <button class="locked-door" id="locked-door"
-          onclick="openLockedRoom()"
-          aria-expanded="false"
-          aria-controls="hidden-room">
-    <span class="door-symbol">✧</span>
-    <span class="door-title">The Locked Room</span>
-    <span class="door-subtitle">Some things are kept beyond the story.</span>
-    <span class="door-lock">♙ &nbsp; TAP TO UNLOCK</span>
-  </button>
+    <!-- EXHIBIT I: THE BEGINNING -->
+    <section id="beginning">
+      <div class="section-heading">
+        <div class="divider"></div>
+        <h2>I. The Beginning</h2>
+        <p>Where our story began.</p>
+      </div>
 
-  <div class="hidden-room" id="hidden-room" hidden>
-    <div class="room-content">
-      <span class="room-star">✦</span>
-      <h3>A Room of Our Own</h3>
-      <p class="room-whisper">
-        Not every part of our story belongs in the gallery.
-        Some things are meant to be found, not displayed.
-      </p>
-      <div class="room-divider">✧ ─── ✧</div>
-      <p class="room-note">A little place, just for us.</p>
-    </div>
-  </div>
-</div>
+      <!-- THE LOCKED ROOM -->
+      <div class="locked-room" id="locked-room">
+        <button class="locked-door"
+                id="locked-door"
+                type="button"
+                onclick="openLockedRoom()"
+                aria-expanded="false"
+                aria-controls="hidden-room">
+          <span class="door-symbol">✧</span>
+          <span class="door-title">The Locked Room</span>
+          <span class="door-subtitle">Some things are kept beyond the story.</span>
+          <span class="door-lock">♙ &nbsp; TAP TO UNLOCK</span>
+        </button>
+
+        <div class="hidden-room" id="hidden-room" hidden>
+          <div class="room-content">
+            <span class="room-star">✦</span>
+            <h3>A Room of Our Own</h3>
+
+            <p class="room-whisper">
+              Not every part of our story belongs in the gallery.
+              Some things are meant to be found, not displayed.
+            </p>
+
+            <div class="room-divider">✧ ─── ✧</div>
+
+            <p class="room-note">A little place, just for us.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
+    <!-- EXHIBIT II -->
     <section id="little-things">
       <div class="section-heading">
         <div class="divider"></div>
@@ -840,6 +875,7 @@
       </p>
     </section>
 
+    <!-- EXHIBIT III -->
     <section id="poetry">
       <div class="section-heading">
         <div class="divider"></div>
@@ -858,6 +894,7 @@
       </p>
     </section>
 
+    <!-- EXHIBIT IV -->
     <section id="distance">
       <div class="section-heading">
         <div class="divider"></div>
@@ -876,6 +913,7 @@
       </p>
     </section>
 
+    <!-- EXHIBIT V -->
     <section id="letters">
       <div class="section-heading">
         <div class="divider"></div>
@@ -895,6 +933,7 @@
       </p>
     </section>
 
+    <!-- EXHIBIT VI -->
     <section id="unwritten">
       <div class="section-heading">
         <div class="divider"></div>
@@ -920,6 +959,7 @@
   </footer>
 
   <script>
+    // RELATIONSHIP CLOCK
     (function () {
       // 14 February 2026, 8:24 PM Indian Standard Time
       const start = new Date("2026-02-14T20:24:00+05:30").getTime();
@@ -949,23 +989,29 @@
       updateClock();
       setInterval(updateClock, 1000);
     })();
+
+    // OPEN AND CLOSE THE LOCKED ROOM
     function openLockedRoom() {
-  const room = document.getElementById("hidden-room");
-  const door = document.getElementById("locked-door");
+      const room = document.getElementById("hidden-room");
+      const door = document.getElementById("locked-door");
 
-  if (!room || !door) return;
+      if (!room || !door) return;
 
-  room.hidden = !room.hidden;
-  door.setAttribute("aria-expanded", String(!room.hidden));
+      room.hidden = !room.hidden;
 
-  const label = door.querySelector(".door-lock");
+      door.setAttribute(
+        "aria-expanded",
+        String(!room.hidden)
+      );
 
-  if (label) {
-    label.innerHTML = room.hidden
-      ? "♙ &nbsp; TAP TO UNLOCK"
-      : "✧ &nbsp; CLOSE THE ROOM";
-  }
-}
+      const label = door.querySelector(".door-lock");
+
+      if (label) {
+        label.innerHTML = room.hidden
+          ? "♙ &nbsp; TAP TO UNLOCK"
+          : "✧ &nbsp; CLOSE THE ROOM";
+      }
+    }
   </script>
 </body>
 </html>
