@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080d20">
+  <title>The Letters Archive | The Museum of Us</title>
+  <style>
+    :root {
+      --navy: #080d20;
+      --gold: #d8bd83;
+      --cream: #f4ebdd;
+      --muted: #aab2cc;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: var(--cream);
+      background:
+        radial-gradient(ellipse at 50% 20%, #202849 0%, transparent 55%),
+        var(--navy);
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .archive {
+      width: min(100%, 540px);
+      text-align: center;
+      padding: 36px 24px;
+      border: 1px solid rgba(216,189,131,.3);
+      border-radius: 18px;
+      background: rgba(10,16,37,.82);
+      box-shadow: 0 0 70px rgba(74,89,150,.12);
+    }
+
+    .symbol {
+      color: var(--gold);
+      font-size: 38px;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow {
+      color: var(--gold);
+      font: 11px Arial, sans-serif;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(30px, 7vw, 44px);
+      font-weight: normal;
+      margin: 16px 0;
+    }
+
+    .intro {
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 14px;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    input {
+      margin-top: 20px;
+      border: 1px solid #424b69;
+      background: #0b1229;
+      color: var(--cream);
+      outline: none;
+    }
+
+    input:focus { border-color: var(--gold); }
+
+    button {
+      margin-top: 12px;
+      border: 1px solid var(--gold);
+      background: var(--gold);
+      color: #11172a;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:disabled { opacity: .6; }
+
+    #status {
+      min-height: 24px;
+      color: var(--muted);
+      font: 13px Arial, sans-serif;
+      margin-top: 16px;
+    }
+
+    #letters {
+      text-align: left;
+      margin-top: 28px;
+    }
+
+    .letter {
+      padding: 22px 0;
+      border-top: 1px solid rgba(216,189,131,.25);
+    }
+
+    .letter h2 {
+      color: var(--gold);
+      font-size: 23px;
+      font-weight: normal;
+    }
+
+    .letter p {
+      white-space: pre-wrap;
+      line-height: 1.9;
+      overflow-wrap: anywhere;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 28px;
+      color: var(--gold);
+      text-decoration: none;
+      font: 13px Arial, sans-serif;
+    }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <main class="archive">
+    <div class="symbol" aria-hidden="true">✧</div>
+    <div class="eyebrow">The Museum of Us · Private Collection</div>
+    <h1>The Letters Archive</h1>
+    <p class="intro">
+      Some words are not meant for display.<br>
+      They are meant to be kept.
+    </p>
+
+    <form id="unlockForm">
+      <input
+        id="password"
+        type="password"
+        placeholder="Enter the archive password"
+        autocomplete="current-password"
+        required
+      >
+      <button id="unlockButton" type="submit">Unlock the archive</button>
+    </form>
+
+    <p id="status" role="status" aria-live="polite">
+      The letters remain sealed.
+    </p>
+
+    <section id="letters" class="hidden" aria-label="Private letters"></section>
+
+    <a class="back" href="index.html">← Return to the museum</a>
+  </main>
+
+  <script>
+    /*
+      ENCRYPTED LETTERS WILL BE ADDED IN A LATER STEP.
+      Do not put plaintext letters or passwords in this file.
+    */
+
+    const encryptedLetters = [];
+
+    const form = document.getElementById("unlockForm");
+    const passwordInput = document.getElementById("password");
+    const button = document.getElementById("unlockButton");
+    const status = document.getElementById("status");
+    const lettersArea = document.getElementById("letters");
+
+    function bytesFromBase64(value) {
+      const binary = atob(value);
+      return Uint8Array.from(binary, char => char.charCodeAt(0));
+    }
+
+    async function deriveKey(password, salt) {
+      const material = await crypto.subtle.importKey(
+        "raw",
+        new TextEncoder().encode(password),
+        "PBKDF2",
+        false,
+        ["deriveKey"]
+      );
+
+      return crypto.subtle.deriveKey(
+        {
+          name: "PBKDF2",
+          salt,
+          iterations: 600000,
+          hash: "SHA-256"
+        },
+        material,
+        { name: "AES-GCM", length: 256 },
+        false,
+        ["decrypt"]
+      );
+    }
+
+    async function decryptLetter(record, password) {
+      const salt = bytesFromBase64(record.salt);
+      const iv = bytesFromBase64(record.iv);
+      const ciphertext = bytesFromBase64(record.ciphertext);
+      const key = await deriveKey(password, salt);
+
+      const plaintext = await crypto.subtle.decrypt(
+        { name: "AES-GCM", iv },
+        key,
+        ciphertext
+      );
+
+      return JSON.parse(new TextDecoder().decode(plaintext));
+    }
+
+    function displayLetters(letters) {
+      lettersArea.replaceChildren();
+
+      for (const letter of letters) {
+        const article = document.createElement("article");
+        article.className = "letter";
+
+        const heading = document.createElement("h2");
+        heading.textContent = letter.title;
+
+        const date = document.createElement("p");
+        date.textContent = letter.date || "";
+
+        const body = document.createElement("p");
+        body.textContent = letter.body;
+
+        article.append(heading, date, body);
+        lettersArea.append(article);
+      }
+
+      lettersArea.classList.remove("hidden");
+      form.classList.add("hidden");
+      status.textContent = "The archive is open.";
+    }
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      if (!window.isSecureContext || !crypto.subtle) {
+        status.textContent =
+          "Secure browser encryption is unavailable. Open this page over HTTPS.";
+        return;
+      }
+
+      if (encryptedLetters.length === 0) {
+        status.textContent =
+          "The archive is ready, but no encrypted letters have been added yet.";
+        return;
+      }
+
+      button.disabled = true;
+      status.textContent = "Unlocking…";
+
+      try {
+        const password = passwordInput.value;
+        const letters = [];
+
+        for (const record of encryptedLetters) {
+          letters.push(await decryptLetter(record, password));
+        }
+
+        displayLetters(letters);
+        passwordInput.value = "";
+      } catch {
+        status.textContent =
+          "The password was incorrect, or the encrypted archive is damaged.";
+        passwordInput.value = "";
+      } finally {
+        button.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
