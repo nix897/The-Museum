@@ -139,35 +139,46 @@
         0 0 42px rgba(216, 189, 131, 0.18);
     }
 
-    .orbiting-moon {
-      position: absolute;
-      bottom: 7%;
-      right: 12%;
-      width: 25px;
-      height: 25px;
-      border-radius: 50%;
-      background: #e7e4d9;
-      box-shadow:
-        0 0 12px rgba(243, 236, 221, 0.22),
-        0 0 32px rgba(243, 236, 221, 0.1);
-    }
+   .orbiting-moon {
+  position: absolute;
+  bottom: 7%;
+  right: 12%;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #e7e4d9;
+  box-shadow:
+    0 0 12px rgba(243, 236, 221, 0.22),
+    0 0 32px rgba(243, 236, 221, 0.1);
+}
 
-    .orbiting-moon::after {
-      content: "";
-      position: absolute;
-      top: -3px;
-      left: 8px;
-      width: 23px;
-      height: 23px;
-      border-radius: 50%;
-      background: #11172a;
-    }
+/* The shadow moves across the moon to create changing phases */
+.orbiting-moon::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #11172a;
+  transform: translateX(-100%);
+  animation: moonPhases 100s steps(1, end) infinite;
+}
 
-    @keyframes celestialTurn {
-      from { transform: translate(-50%, -50%) rotate(0deg); }
-      to { transform: translate(-50%, -50%) rotate(360deg); }
-    }
+@keyframes moonPhases {
+  0%, 100% { transform: translateX(-100%); }
+  12.5% { transform: translateX(-75%); }
+  25% { transform: translateX(0%); }
+  37.5% { transform: translateX(75%); }
+  50% { transform: translateX(100%); }
+  62.5% { transform: translateX(75%); }
+  75% { transform: translateX(0%); }
+  87.5% { transform: translateX(-75%); }
+}
 
+@keyframes celestialTurn {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
     /* ORIGINAL TWINKLING STAR FIELD */
     .stars {
       position: fixed;
