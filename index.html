@@ -17,9 +17,7 @@
       --line: rgba(216, 189, 131, 0.25);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     html {
       scroll-behavior: smooth;
@@ -37,10 +35,7 @@
       overflow-x: hidden;
     }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
     /* COSMIC BACKGROUND */
 
@@ -513,7 +508,7 @@
       color: var(--muted);
     }
 
-    /* THE LOCKED ROOM */
+    /* THE LOCKED ROOMS */
 
     .locked-room {
       max-width: 520px;
@@ -582,14 +577,7 @@
       animation: roomReveal .8s ease both;
     }
 
-    .hidden-room[hidden] {
-      display: none;
-    }
-
-    .room-star {
-      color: var(--gold);
-      font-size: 1.8rem;
-    }
+    .hidden-room[hidden] { display: none; }
 
     .room-content h3 {
       color: var(--gold);
@@ -597,6 +585,12 @@
       font-weight: normal;
       letter-spacing: 1px;
       margin: 18px 0;
+      font-size: 1.5rem;
+    }
+
+    .room-star {
+      color: var(--gold);
+      font-size: 1.8rem;
     }
 
     .room-whisper {
@@ -617,6 +611,78 @@
       color: rgba(216,189,131,.7);
       font-family: Georgia, serif;
       font-style: italic;
+    }
+
+    /* CENTRAL EXHIBIT LINK */
+
+    .exhibit-entry {
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 25px auto 10px;
+      min-width: min(100%, 250px);
+      padding: 22px 30px;
+      border: 1px solid rgba(216,189,131,.65);
+      outline: 1px solid rgba(216,189,131,.12);
+      outline-offset: 5px;
+      color: var(--gold);
+      background:
+        radial-gradient(ellipse at center,
+          rgba(216,189,131,.17), transparent 75%),
+        rgba(12,18,36,.88);
+      letter-spacing: 3px;
+      font-size: .82rem;
+      text-align: center;
+      box-shadow:
+        0 0 18px rgba(216,189,131,.08),
+        inset 0 0 22px rgba(216,189,131,.04);
+      transition:
+        background .35s,
+        border-color .35s,
+        box-shadow .35s,
+        transform .35s;
+      animation: entryGlow 3.5s ease-in-out infinite alternate;
+    }
+
+    .exhibit-entry:hover,
+    .exhibit-entry:focus-visible {
+      transform: translateY(-3px);
+      border-color: var(--gold);
+      background:
+        radial-gradient(ellipse at center,
+          rgba(216,189,131,.27), transparent 75%),
+        rgba(20,27,47,.96);
+      box-shadow:
+        0 0 28px rgba(216,189,131,.2),
+        inset 0 0 25px rgba(216,189,131,.08);
+      outline: none;
+    }
+
+    .entry-symbol {
+      font-size: 1.45rem;
+      letter-spacing: 0;
+      text-shadow: 0 0 15px rgba(216,189,131,.55);
+    }
+
+    .entry-caption {
+      color: rgba(235,226,207,.65);
+      font-size: .65rem;
+      letter-spacing: 2px;
+    }
+
+    @keyframes entryGlow {
+      from {
+        box-shadow:
+          0 0 12px rgba(216,189,131,.06),
+          inset 0 0 18px rgba(216,189,131,.025);
+      }
+      to {
+        box-shadow:
+          0 0 25px rgba(216,189,131,.16),
+          inset 0 0 24px rgba(216,189,131,.07);
+      }
     }
 
     @keyframes roomReveal {
@@ -667,9 +733,7 @@
         letter-spacing: 1px;
       }
 
-      .gallery {
-        grid-template-columns: 1fr;
-      }
+      .gallery { grid-template-columns: 1fr; }
 
       .exhibit {
         min-height: auto;
@@ -692,6 +756,8 @@
         filter: blur(45px);
         opacity: 0.18;
       }
+
+      .hidden-room { padding: 34px 18px; }
     }
 
     /* ACCESSIBILITY */
@@ -722,10 +788,7 @@
     </div>
 
     <div class="shooting-stars">
-      <i></i>
-      <i></i>
-      <i></i>
-      <i></i>
+      <i></i><i></i><i></i><i></i>
     </div>
   </div>
 
@@ -777,8 +840,7 @@
       </div>
 
       <div class="gallery">
-        <a class="exhibit" href="#locked-room"
-           onclick="event.preventDefault(); document.getElementById('locked-room').scrollIntoView({behavior:'smooth', block:'center'});">
+        <a class="exhibit" href="#beginning">
           <div class="number">EXHIBIT I</div>
           <h3>The Beginning</h3>
           <p>Where a conversation became something more.</p>
@@ -816,7 +878,7 @@
       </div>
     </section>
 
-    <!-- EXHIBIT I: THE BEGINNING -->
+    <!-- EXHIBIT I -->
     <section id="beginning">
       <div class="section-heading">
         <div class="divider"></div>
@@ -824,10 +886,9 @@
         <p>Where our story began.</p>
       </div>
 
-      <!-- THE LOCKED ROOM -->
-      <div class="locked-room" id="locked-room">
+      <div class="locked-room">
         <button class="locked-door"
-                id="locked-door"
+                id="door-hidden-room"
                 type="button"
                 onclick="openMuseumRoom('hidden-room')"
                 aria-expanded="false"
@@ -838,12 +899,12 @@
           <span class="door-lock">♙ &nbsp; TAP TO UNLOCK</span>
         </button>
 
-<div class="hidden-room" id="hidden-room" hidden>
-  <div class="room-content" id="room-content-hidden-room"></div>
-</div>
+        <div class="hidden-room" id="hidden-room" hidden>
+          <div class="room-content" id="room-content-hidden-room"></div>
+        </div>
       </div>
     </section>
-    
+
     <!-- EXHIBIT II -->
     <section id="little-things">
       <div class="section-heading">
@@ -861,6 +922,24 @@
         A collection of the little things I notice, appreciate,
         and never want you to think go unnoticed.
       </p>
+
+      <div class="locked-room">
+        <button class="locked-door"
+                id="door-little-things-room"
+                type="button"
+                onclick="openMuseumRoom('little-things-room')"
+                aria-expanded="false"
+                aria-controls="little-things-room">
+          <span class="door-symbol">✧</span>
+          <span class="door-title">The Little Things</span>
+          <span class="door-subtitle">A thousand details, each worth keeping.</span>
+          <span class="door-lock">♙ &nbsp; TAP TO UNLOCK</span>
+        </button>
+
+        <div class="hidden-room" id="little-things-room" hidden>
+          <div class="room-content" id="room-content-little-things-room"></div>
+        </div>
+      </div>
     </section>
 
     <!-- EXHIBIT III -->
@@ -880,6 +959,24 @@
         Our poems, arranged in chronological order,
         with each original preserved just as it was written.
       </p>
+
+      <div class="locked-room">
+        <button class="locked-door"
+                id="door-poetry-room"
+                type="button"
+                onclick="openMuseumRoom('poetry-room')"
+                aria-expanded="false"
+                aria-controls="poetry-room">
+          <span class="door-symbol">✧</span>
+          <span class="door-title">The Poetry Archive</span>
+          <span class="door-subtitle">Words that found their way into being.</span>
+          <span class="door-lock">♙ &nbsp; TAP TO UNLOCK</span>
+        </button>
+
+        <div class="hidden-room" id="poetry-room" hidden>
+          <div class="room-content" id="room-content-poetry-room"></div>
+        </div>
+      </div>
     </section>
 
     <!-- EXHIBIT IV -->
@@ -899,6 +996,24 @@
         A place for our favourite memories, little traditions,
         screenshots, and moments that made the distance feel smaller.
       </p>
+
+      <div class="locked-room">
+        <button class="locked-door"
+                id="door-distance-room"
+                type="button"
+                onclick="openMuseumRoom('distance-room')"
+                aria-expanded="false"
+                aria-controls="distance-room">
+          <span class="door-symbol">✧</span>
+          <span class="door-title">Six Thousand Kilometres</span>
+          <span class="door-subtitle">Two skies, one place to meet.</span>
+          <span class="door-lock">♙ &nbsp; TAP TO UNLOCK</span>
+        </button>
+
+        <div class="hidden-room" id="distance-room" hidden>
+          <div class="room-content" id="room-content-distance-room"></div>
+        </div>
+      </div>
     </section>
 
     <!-- EXHIBIT V -->
@@ -915,10 +1030,27 @@
       </p>
 
       <p class="placeholder">
-        Private letters will be linked here once their access is configured.
-        The letters themselves will remain in restricted documents,
-        not in this public website.
+        Some words are best kept between the two people
+        they were written for.
       </p>
+
+      <div class="locked-room">
+        <button class="locked-door"
+                id="door-letters-room"
+                type="button"
+                onclick="openMuseumRoom('letters-room')"
+                aria-expanded="false"
+                aria-controls="letters-room">
+          <span class="door-symbol">✧</span>
+          <span class="door-title">The Letters Room</span>
+          <span class="door-subtitle">For words meant to find you.</span>
+          <span class="door-lock">♙ &nbsp; TAP TO UNLOCK</span>
+        </button>
+
+        <div class="hidden-room" id="letters-room" hidden>
+          <div class="room-content" id="room-content-letters-room"></div>
+        </div>
+      </div>
     </section>
 
     <!-- EXHIBIT VI -->
@@ -935,9 +1067,27 @@
       </p>
 
       <p class="placeholder">
-        The final room will hold your birthday letter
-        and the things you hope to experience together.
+        A room for all the things still waiting for us:
+        the places, the promises, and the pages yet to come.
       </p>
+
+      <div class="locked-room">
+        <button class="locked-door"
+                id="door-unwritten-room"
+                type="button"
+                onclick="openMuseumRoom('unwritten-room')"
+                aria-expanded="false"
+                aria-controls="unwritten-room">
+          <span class="door-symbol">✧</span>
+          <span class="door-title">The Unwritten Pages</span>
+          <span class="door-subtitle">There is still so much left to discover.</span>
+          <span class="door-lock">♙ &nbsp; TAP TO UNLOCK</span>
+        </button>
+
+        <div class="hidden-room" id="unwritten-room" hidden>
+          <div class="room-content" id="room-content-unwritten-room"></div>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -978,99 +1128,256 @@
       setInterval(updateClock, 1000);
     })();
 
-    // OPEN AND CLOSE THE LOCKED ROOM
-const museumRooms = {
-  "hidden-room": {
-    title: "A Room of Our Own",
-    encrypted: null
-  },
-  "little-things-room": {
-    title: "The Little Things",
-    encrypted: null
-  },
-  "poetry-room": {
-    title: "The Poetry Archive",
-    encrypted: null
-  },
-  "distance-room": {
-    title: "Six Thousand Kilometres",
-    encrypted: null
-  },
-  "letters-room": {
-    title: "The Letters Room",
-    encrypted: null
-  },
-  "unwritten-room": {
-    title: "The Unwritten Pages",
-    encrypted: null
-  }
-};
+    // ENCRYPTED EXHIBIT LINKS
+    // Each exhibit URL was encrypted separately with the same passphrase.
+    const museumRooms = {
+      "hidden-room": {
+        title: "The Beginning",
+        whisper: "Every story has a first page. This one is ours.",
+        encrypted: {
+          version: 1,
+          kdf: "PBKDF2-SHA-256",
+          iterations: 600000,
+          salt: "pMEsjpY+AdMaAp2DkSjTjQ==",
+          iv: "LSHWmPOTxU4maWnL",
+          ciphertext: "lWp0ix4tzSY6BOC+RzePwSmJkAFhzj/A+mOI5YC/axLZYTuEMmhs666XVssfuiCxdce4dQvnzmbqy606ES3G0gxQ8y7kx45Ote3oH835Jc+1vw2F8+SwN1V10xREO3s6Q8pSFIxjCElZTxOSwkJiTZQ="
+        }
+      },
 
-function decodeBase64(value) {
-  return Uint8Array.from(atob(value), c => c.charCodeAt(0));
-}
+      "little-things-room": {
+        title: "The Little Things",
+        whisper: "A thousand little details, each one worth remembering.",
+        encrypted: {
+          version: 1,
+          kdf: "PBKDF2-SHA-256",
+          iterations: 600000,
+          salt: "HpDheitzyJyRtI1637CQkg==",
+          iv: "Ue7MHgso4kj8i+kj",
+          ciphertext: "mtlhFplCQlNif+gd/8/GFAnw95Zn6EYrJkuak85wSghO5Lmt2d7ioiTRKr1RvJQF8A+J0JQiSwG3p1YBBvuG0thdwF+SjbXfiVBSEKv5pc5RtBi8Xi6ttxBEnupKEIdsicyp43U5zPQmDVjtwQ7XXAs="
+        }
+      },
 
-async function decryptRoom(payload, password) {
-  const enc = new TextEncoder();
+      "poetry-room": {
+        title: "The Poetry Archive",
+        whisper: "Some feelings are too large for ordinary words.",
+        encrypted: {
+          version: 1,
+          kdf: "PBKDF2-SHA-256",
+          iterations: 600000,
+          salt: "PJMfyw5nS3j5u9MgYTxh4w==",
+          iv: "/pP7gAvgfGk1RGdW",
+          ciphertext: "GebgThYPfe0bfrHHsYP4jQ8sKCQ9ai9b+IxOsofFWJFwCLn8keC0EZt223P8Ns8z6qs8jtyvxkfXHdIqeliYAdu2d6O28zfZqNxPI4CZaXTsiqeka0UeYhjgRwUafZBndF6ccTVxwEXP1NFRkKooRMo="
+        }
+      },
 
-  const material = await crypto.subtle.importKey(
-    "raw",
-    enc.encode(password),
-    "PBKDF2",
-    false,
-    ["deriveKey"]
-  );
+      "distance-room": {
+        title: "Six Thousand Kilometres",
+        whisper: "Different places, different skies, and still a shared story.",
+        encrypted: {
+          version: 1,
+          kdf: "PBKDF2-SHA-256",
+          iterations: 600000,
+          salt: "bhsVuYb21bnhABtI37sPKg==",
+          iv: "wBdoUsMujsT31kC4",
+          ciphertext: "LTx5ltcjQJvfpNcnyoaiwDgFYutTjqHVOhPiPEzka65kEJ4ON/TTyWdZbNpJxdbelBIRsK1ocQ3h6WVyvDe4DvuaxhTInqNzN53fGzXQUFv/AiwBb2ljZFrYxWfyV50ZegULboI2YiMXtfHnQI+oAyM="
+        }
+      },
 
-  const key = await crypto.subtle.deriveKey(
-    {
-      name: "PBKDF2",
-      salt: decodeBase64(payload.salt),
-      iterations: payload.iterations,
-      hash: "SHA-256"
-    },
-    material,
-    { name: "AES-GCM", length: 256 },
-    false,
-    ["decrypt"]
-  );
+      "letters-room": {
+        title: "The Letters Room",
+        whisper: "A few words can travel farther than distance allows.",
+        encrypted: {
+          version: 1,
+          kdf: "PBKDF2-SHA-256",
+          iterations: 600000,
+          salt: "yZfFPv8gM91dqXx2V7spxA==",
+          iv: "RdQaGhEEcHu+Wn1O",
+          ciphertext: "8m8h85/Im5W1Z8trFwvpopHBEdQpVF1Tlo7kH2uE5gXlllR0hcDN3zfzrAUbuBOdnTnPu83t60xQ74Tsbx1iN5OCVXAHGavW2178FOMXP4r75UeYaQpxOpWViWJo3MlMu+XZl+ZO09O3bboqfn2vamI="
+        }
+      },
 
-  const plain = await crypto.subtle.decrypt(
-    { name: "AES-GCM", iv: decodeBase64(payload.iv) },
-    key,
-    decodeBase64(payload.ciphertext)
-  );
+      "unwritten-room": {
+        title: "The Unwritten Pages",
+        whisper: "The best parts of our story are still waiting to happen.",
+        encrypted: {
+          version: 1,
+          kdf: "PBKDF2-SHA-256",
+          iterations: 600000,
+          salt: "LOhYhcDqWWVArvifqpping==",
+          iv: "DLdJj/GgbKAX0lHb",
+          ciphertext: "l6a9eZxjZnlwYcaOvAGmDMQxHj2sgeOd+dr7HkD2WDQm4PQlau2QlsOE2sD2CqW+qdk3eCs6+g/tFTwAL8JNP/49ggKM8kpAO1kMQYvjhBiWnTYPrU3/btlzmenVQmmOxeOuwHVpjP7qUyd1su6K92Y="
+        }
+      }
+    };
 
-  return new TextDecoder().decode(plain);
-}
+    function decodeBase64(value) {
+      return Uint8Array.from(atob(value), c => c.charCodeAt(0));
+    }
 
-async function openMuseumRoom(roomId) {
-  const room = museumRooms[roomId];
-  if (!room) return;
+    async function decryptRoom(payload, password) {
+      if (
+        !payload ||
+        payload.version !== 1 ||
+        payload.kdf !== "PBKDF2-SHA-256" ||
+        payload.iterations !== 600000
+      ) {
+        throw new Error("Unsupported encrypted payload.");
+      }
 
-  if (!room.encrypted) {
-    alert("This room has not been encrypted and added yet.");
-    return;
-  }
+      if (!window.crypto || !window.crypto.subtle) {
+        throw new Error("Secure cryptography is unavailable.");
+      }
 
-  const container = document.getElementById(roomId);
-  if (!container) return;
+      const enc = new TextEncoder();
 
-  if (!container.hidden) {
-    container.hidden = true;
-    return;
-  }
+      const material = await crypto.subtle.importKey(
+        "raw",
+        enc.encode(password),
+        "PBKDF2",
+        false,
+        ["deriveKey"]
+      );
 
-  const password = prompt("Enter the shared museum passphrase:");
-  if (password === null) return;
+      const key = await crypto.subtle.deriveKey(
+        {
+          name: "PBKDF2",
+          salt: decodeBase64(payload.salt),
+          iterations: payload.iterations,
+          hash: "SHA-256"
+        },
+        material,
+        { name: "AES-GCM", length: 256 },
+        false,
+        ["decrypt"]
+      );
 
-  try {
-    const text = await decryptRoom(room.encrypted, password);
-    container.textContent = text;
-    container.hidden = false;
-  } catch {
-    alert("Incorrect passphrase, or this room's encrypted data is invalid.");
-  }
-}
+      const plain = await crypto.subtle.decrypt(
+        { name: "AES-GCM", iv: decodeBase64(payload.iv) },
+        key,
+        decodeBase64(payload.ciphertext)
+      );
+
+      return new TextDecoder().decode(plain);
+    }
+
+    // Only accept a Google Docs document URL.
+    function validateDocumentUrl(value) {
+      let url;
+
+      try {
+        url = new URL(value);
+      } catch {
+        throw new Error("The decrypted value is not a valid URL.");
+      }
+
+      if (
+        url.protocol !== "https:" ||
+        url.hostname !== "docs.google.com" ||
+        !url.pathname.startsWith("/document/d/")
+      ) {
+        throw new Error("This is not an accepted Google Docs URL.");
+      }
+
+      return url.href;
+    }
+
+    function buildRoomContent(room, documentUrl, container) {
+      // Clear any previous content.
+      container.replaceChildren();
+
+      const star = document.createElement("div");
+      star.className = "room-star";
+      star.textContent = "✧";
+
+      const heading = document.createElement("h3");
+      heading.textContent = room.title;
+
+      const whisper = document.createElement("p");
+      whisper.className = "room-whisper";
+      whisper.textContent = room.whisper;
+
+      const divider = document.createElement("div");
+      divider.className = "room-divider";
+      divider.textContent = "✦ · ✧ · ✦";
+
+      const entry = document.createElement("a");
+      entry.className = "exhibit-entry";
+      entry.href = documentUrl;
+      entry.target = "_blank";
+      entry.rel = "noopener noreferrer";
+      entry.setAttribute("aria-label", "Open " + room.title);
+
+      const entrySymbol = document.createElement("span");
+      entrySymbol.className = "entry-symbol";
+      entrySymbol.textContent = "✧";
+
+      const entryTitle = document.createElement("span");
+      entryTitle.textContent = "ENTER EXHIBIT";
+
+      const entryCaption = document.createElement("span");
+      entryCaption.className = "entry-caption";
+      entryCaption.textContent = "OPEN THE ARCHIVE";
+
+      entry.append(entrySymbol, entryTitle, entryCaption);
+
+      const note = document.createElement("p");
+      note.className = "room-note";
+      note.textContent = "A little world, kept just for us.";
+
+      container.append(
+        star,
+        heading,
+        whisper,
+        divider,
+        entry,
+        note
+      );
+    }
+
+    async function openMuseumRoom(roomId) {
+      const room = museumRooms[roomId];
+      if (!room) return;
+
+      const container = document.getElementById(roomId);
+      const door = document.getElementById("door-" + roomId);
+
+      if (!container || !door) return;
+
+      // If already open, close it.
+      if (!container.hidden) {
+        container.hidden = true;
+        door.setAttribute("aria-expanded", "false");
+        return;
+      }
+
+      const password = prompt("Enter the shared museum passphrase:");
+
+      if (password === null) return;
+
+      if (!password) {
+        alert("Please enter the museum passphrase.");
+        return;
+      }
+
+      door.disabled = true;
+
+      try {
+        const decryptedText = await decryptRoom(room.encrypted, password);
+        const documentUrl = validateDocumentUrl(decryptedText);
+
+        buildRoomContent(room, documentUrl, container);
+
+        container.hidden = false;
+        door.setAttribute("aria-expanded", "true");
+      } catch (error) {
+        console.error("Museum room could not be opened:", error);
+        alert(
+          "The room could not be opened. Check the passphrase and try again."
+        );
+      } finally {
+        door.disabled = false;
+      }
+    }
   </script>
 </body>
 </html>
